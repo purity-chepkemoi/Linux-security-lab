@@ -364,15 +364,15 @@ Relative paths depend on the current working directory. In automated systems suc
 
 A log file was removed, causing monitoring failure.
 
-**Tasks
+**Tasks**
 
 I created a File
 
-echo "Log entry" > app.log
+_echo "Log entry" > app.log_
 
-ls -li app.log
+_ls -li app.log_
 
-the inode number and link count (should be 1).
+the inode number and link count is 1
 
 1. Create hard link
 
@@ -546,15 +546,15 @@ T (uppercase) at the end → sticky bit is set, but “others” don’t have ex
 
 Because of the missing execute (x) for others, non-group users cannot enter the directory.
 
-**Scenario 8 – Special Permission Risk Review
+**Scenario 8 – Special Permission Risk Review**
 
-Context**
+**Context**
 
 A script requires controlled privilege behavior.
 
 **Tasks**
 
-T**ask A – Sticky Bit on Shared Directory**
+**Task A – Sticky Bit on Shared Directory**
 
 1. Inside:
 
@@ -580,19 +580,19 @@ sudo chown -R dev_user:project_team ~/company_projects
 
 3. Apply the sticky bit on the shared/ directory.
 
-As dev_user, I create a file:
+As dev_user, I created a file:
 
 cd ~/company_projects/payments_platform/environments/production/services/api/shared
 
 touch project_notes.txt
 
-Apply sticky bit on the directory:
+Then applied sticky bit on the directory:
 
 sudo chmod +t .
 
-Verify sticky bit:
+To verify sticky bit:
 
-ls -ld .
+_ls -ld ._
 
 ![Description]( scenario_08/TaskA_02.png)
 
@@ -600,17 +600,17 @@ ls -ld .
 
 dev_user.
 
-I switched to intern_a and attempt to delete the file:
+I switched to intern_a and attempted to delete the file:
 
 su - intern_a
 
 cd /home/dev_user/company_projects/payments_platform/environments/production/services/api/shared
 
-rm project_notes.txt
+_rm project_notes.txt_
 
 ![Description]( scenario_08/TaskA_03.png)
 
-Task B – SetGID Demonstration
+**Task B – SetGID Demonstration**
 
 1.	Apply setgid on the same shared/ directory.
 
@@ -618,7 +618,7 @@ Task B – SetGID Demonstration
 
 shared/team_docs/
 
-As dev_user, I apply setgid:
+As dev_user, I applied setgid:
 
 cd ~/company_projects/payments_platform/environments/production/services/api/shared
 
@@ -636,13 +636,13 @@ mkdir team_docs
 
 ![Description]( scenario_08/TaskB_01.png)
 
-As intern_a, I create a file and folder inside team_docs:
+As intern_a, I created a file and folder inside team_docs:
 
 cd /home/dev_user/company_projects/payments_platform/environments/production/services/api/shared/team_docs
 
-touch notes.txt
+_touch notes.txt_
 
-mkdir drafts
+_mkdir drafts_
 
 ![Description]( scenario_08/TaskB_02.png)
 
@@ -654,7 +654,7 @@ All files/folders have group project_team even though intern_a’s primary group
 
 I see that setgid on a directory forces all new files and subdirectories to inherit the parent directory’s group, which is important for team collaboration.
 
-Task C – SetUID on Files
+**Task C – SetUID on Files**
 
 1. Inside
 
@@ -674,7 +674,7 @@ Explanation: I go to the bin folder where I will create the dummy script for thi
 
 create a dummy file
 
-touch run_task.sh
+_touch run_task.sh_
 
 Explanation: I created an empty file. I don’t need to write anything inside it; I just want to observe permission bits.
 
@@ -682,15 +682,15 @@ Set setuid with execute for owner (‘s’)
 
 Make the file executable for the owner
 
-chmod u+x run_task.sh
+_chmod u+x run_task.sh_
 
 Apply setuid
 
-chmod u+s run_task.sh
+_chmod u+s run_task.sh_
 
 Check the permissions
 
-ls -l run_task.sh
+_ls -l run_task.sh_
 
 The lowercase s shows setuid is active, and the owner can execute the file.
 
@@ -700,11 +700,11 @@ This means if someone executes the file, it will run with the owner’s privileg
 
 Remove owner execute and set setuid bit
 
-chmod 4000 run_task.sh
+_chmod 4000 run_task.sh_
 
 Check the permissions
 
-ls -l run_task.sh
+_ls -l run_task.sh_
 
 •	The uppercase S means setuid is set, but the owner cannot execute the file yet.
 
@@ -713,8 +713,6 @@ ls -l run_task.sh
 o	s → setuid active and executable
 
 o	S → setuid bit set but no execution
-
-This is exactly what the assignment wants to observe without running the file.
 
 2.	Do NOT run the file — the goal is to observe and understand permission bits.
 
@@ -757,9 +755,9 @@ fg %1
 
 Pause it and send back to background
 
-Ctrl+Z   # pause
+_Ctrl+Z   # pause_
 
-bg %1    
+_bg %1_    
 
 ![Description]( scenario_09/Part02.png)
 
@@ -783,7 +781,6 @@ bg %1
 
 ○ Preventative controls
 
-I can create a file and write multiple lines at once using heredoc:
 
 I use cat << EOF > filename to write many lines at once.
 
